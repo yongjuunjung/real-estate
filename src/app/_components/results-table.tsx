@@ -82,7 +82,7 @@ export function ResultsTable({ rows, selectedAptId }: { rows: ApartmentExpiryRow
 
 function Th({ children, align }: { children: React.ReactNode; align?: "right" }) {
   return (
-    <th className={`px-3 py-2 font-medium text-muted-foreground ${align === "right" ? "text-right" : "text-left"}`}>
+    <th className={`whitespace-nowrap px-3 py-2 font-medium text-muted-foreground ${align === "right" ? "text-right" : "text-left"}`}>
       {children}
     </th>
   );
@@ -90,7 +90,7 @@ function Th({ children, align }: { children: React.ReactNode; align?: "right" })
 
 function Td({ children, align, className }: { children: React.ReactNode; align?: "right"; className?: string }) {
   return (
-    <td className={`px-3 py-2 ${align === "right" ? "text-right" : ""} ${className ?? ""}`}>
+    <td className={`whitespace-nowrap px-3 py-2 ${align === "right" ? "text-right" : ""} ${className ?? ""}`}>
       {children}
     </td>
   );
