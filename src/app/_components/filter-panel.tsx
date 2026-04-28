@@ -193,13 +193,13 @@ export function FilterPanel({ regions }: { regions: RegionOption[] }) {
         {visibleDongs.length === 0 ? (
           <span className="text-xs text-muted-foreground">데이터 없음</span>
         ) : (
-          <div className="flex flex-wrap gap-1">
+          <div className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1">
             {visibleDongs.map((dong) => (
               <button
                 key={dong}
                 type="button"
                 onClick={() => toggleList("dong", dong)}
-                className={chipClass(filters.dongs?.includes(dong) ?? false)}
+                className={`${chipClass(filters.dongs?.includes(dong) ?? false)} shrink-0 whitespace-nowrap`}
               >
                 {dong}
               </button>
