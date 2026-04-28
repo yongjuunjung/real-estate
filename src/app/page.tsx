@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: PageProps) {
         }`}
       >
         <FilterPanel regions={regions} />
-        <section className="flex flex-col overflow-hidden">
+        <section className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-border bg-background px-3 py-2 text-xs md:px-4">
             <div className="text-muted-foreground">
               <strong className="text-foreground">{periodLabel(filters)}</strong> 만료 ·{" "}
