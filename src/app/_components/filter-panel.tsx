@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { readPyeongRaw } from "@/lib/filter-params";
 import { parseFilters } from "@/lib/filter-params";
 import type { RegionOption } from "@/lib/queries/expiring-leases";
@@ -20,6 +20,7 @@ export function FilterPanel({ regions }: { regions: RegionOption[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false);
 
   const sp: Record<string, string | string[] | undefined> = {};
   for (const [k, v] of searchParams.entries()) sp[k] = v;
@@ -64,7 +65,45 @@ export function FilterPanel({ regions }: { regions: RegionOption[] }) {
   })();
 
   return (
-    <aside className="flex flex-col gap-5 overflow-y-auto border-r border-border bg-muted/30 p-4 text-sm">
+    <>
+      {/* 모바일: 햄버거 버튼 (좌상단 고정) */}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="필터 열기"
+        className="fixed left-3 top-3 z-30 inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-background px-3 text-xs font-medium shadow-md md:hidden"
+      >
+        <span aria-hidden>☰</span> 필터
+      </button>
+
+      {/* 모바일: 드로어 backdrop */}
+      {open && (
+        <button
+          type="button"
+          aria-label="필터 닫기"
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-30 bg-black/40 md:hidden"
+        />
+      )}
+
+      <aside
+        className={`
+          flex flex-col gap-5 overflow-y-auto bg-background p-4 text-sm
+          fixed inset-y-0 left-0 z-40 w-[280px] max-w-[85vw] shadow-xl
+          transition-transform duration-200
+          ${open ? "translate-x-0" : "-translate-x-full"}
+          md:static md:z-auto md:w-auto md:max-w-none md:translate-x-0 md:border-r md:border-border md:bg-muted/30 md:shadow-none md:transition-none
+        `}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="필터 닫기"
+          className="self-end rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground md:hidden"
+        >
+          ✕
+        </button>
+
       <FilterGroup label="시군구">
         <div className="flex flex-wrap gap-1">
           {regions.length === 0 ? (
@@ -256,7 +295,8 @@ export function FilterPanel({ regions }: { regions: RegionOption[] }) {
       </button>
 
       {isPending && <div className="text-xs text-muted-foreground">불러오는 중…</div>}
-    </aside>
+      </aside>
+    </>
   );
 }
 

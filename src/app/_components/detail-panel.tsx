@@ -3,9 +3,12 @@ import type { ApartmentDetail } from "@/lib/queries/expiring-leases";
 import { CloseDetailButton } from "./close-detail-button";
 
 export function DetailPanel({ data }: { data: ApartmentDetail | null }) {
+  const asideClass =
+    "fixed inset-0 z-50 flex flex-col bg-background md:static md:inset-auto md:z-auto md:border-l md:border-border";
+
   if (!data) {
     return (
-      <aside className="flex flex-col border-l border-border bg-background">
+      <aside className={asideClass}>
         <div className="flex items-center justify-between border-b border-border px-4 py-2">
           <span className="text-xs text-muted-foreground">단지 상세</span>
           <CloseDetailButton />
@@ -24,7 +27,7 @@ export function DetailPanel({ data }: { data: ApartmentDetail | null }) {
   const filtered = matchedTxns < totalFutureTxns;
 
   return (
-    <aside className="flex flex-col overflow-hidden border-l border-border bg-background">
+    <aside className={`${asideClass} overflow-hidden`}>
       <div className="flex items-start justify-between gap-2 border-b border-border px-4 py-3">
         <div className="min-w-0">
           <h2 className="truncate text-base font-semibold">{name}</h2>

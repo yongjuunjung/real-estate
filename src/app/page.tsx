@@ -40,24 +40,28 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <div className="flex h-dvh flex-col">
-      <header className="flex shrink-0 items-center justify-between border-b border-border bg-background px-4 py-3">
-        <div>
-          <h1 className="text-base font-semibold">전세 만료 트래커</h1>
-          <p className="text-xs text-muted-foreground">
+      <header className="flex shrink-0 items-center justify-between gap-2 border-b border-border bg-background py-3 pl-24 pr-4 md:px-4">
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate text-sm font-semibold md:text-base">전세 만료 트래커</h1>
+          <p className="hidden truncate text-xs text-muted-foreground sm:block">
             {regionLabel(filters.sigunguCodes, regions.map((r) => r.sigunguCode))} · 계약 데이터 2024-01 ~ 2025-04
           </p>
         </div>
-        <SummaryBadges stats={stats} label={periodLabel(filters)} />
+        <div className="hidden md:block">
+          <SummaryBadges stats={stats} label={periodLabel(filters)} />
+        </div>
       </header>
 
       <main
-        className={`grid flex-1 overflow-hidden ${
-          showDetail ? "grid-cols-[260px_minmax(0,1fr)_420px]" : "grid-cols-[260px_1fr]"
+        className={`flex flex-1 flex-col overflow-hidden md:grid ${
+          showDetail
+            ? "md:grid-cols-[260px_minmax(0,1fr)_420px]"
+            : "md:grid-cols-[260px_1fr]"
         }`}
       >
         <FilterPanel regions={regions} />
         <section className="flex flex-col overflow-hidden">
-          <div className="flex shrink-0 items-center justify-between border-b border-border bg-background px-4 py-2 text-xs">
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-border bg-background px-3 py-2 text-xs md:px-4">
             <div className="text-muted-foreground">
               <strong className="text-foreground">{periodLabel(filters)}</strong> 만료 ·{" "}
               {viewState.view === "apt" || viewState.view === "map" ? (
@@ -66,7 +70,7 @@ export default async function Home({ searchParams }: PageProps) {
                 </>
               ) : null}
               <strong className="text-foreground">{stats.totalTxns.toLocaleString()}</strong>건 ·{" "}
-              갱신 비율 <strong className="text-foreground">{stats.renewalRate}%</strong>
+              갱신 <strong className="text-foreground">{stats.renewalRate}%</strong>
             </div>
             <ViewToggle current={viewState.view} />
           </div>
